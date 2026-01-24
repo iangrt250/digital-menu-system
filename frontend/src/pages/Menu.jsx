@@ -2,6 +2,20 @@ import { useState, useEffect } from 'react';
 import ItemCard from '../components/ui/ItemCard';
 import { useCart } from '../context/CartContext';
 
+
+
+// In Menu.jsx, add this to the top
+console.log('Menu component loaded');
+
+// In the ItemCard usage:
+<ItemCard 
+  key={item._id} 
+  item={item} 
+  onAdd={(item) => {
+    console.log('Adding item from Menu:', item);
+    addToCart(item);
+  }} 
+/>
 // Mock data as fallback
 const MOCK_MENU = [
   {
