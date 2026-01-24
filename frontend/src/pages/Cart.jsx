@@ -9,9 +9,9 @@ export default function Cart() {
   if (cart.length === 0) {
     return (
       <div className="container mx-auto p-6 text-center">
-        <div className="text-5xl mb-4">🛒</div>
-        <h1 className="text-3xl font-bold mb-4">Your cart is empty</h1>
-        <p className="text-gray-600 mb-6">Looks like you haven't added any items yet</p>
+        <div className="text-5xl mb-4 text-black">🛒</div>
+        <h1 className="text-3xl font-bold mb-4 text-black">Your cart is empty</h1>
+        <p className="text-black mb-6">Looks like you haven't added any items yet</p>
         <button
           onClick={() => navigate('/menu')}
           className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
@@ -23,15 +23,15 @@ export default function Cart() {
   }
 
   return (
-    <div className="container mx-auto p-4 md:p-6">
-      <h1 className="text-3xl font-bold mb-8">Your Cart ({cart.length} {cart.length === 1 ? 'item' : 'items'})</h1>
+    <div className="container mx-auto p-4 md:p-6 text-black">
+      <h1 className="text-3xl font-bold mb-8 text-black">Your Cart ({cart.length} {cart.length === 1 ? 'item' : 'items'})</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Cart Items */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl shadow-sm">
             {cart.map(item => (
-              <div key={item._id} className="flex items-center p-4 border-b last:border-b-0">
+              <div key={item._id} className="flex items-center p-4 border-b last:border-b-0 text-black">
                 {item.imageUrl && (
                   <img 
                     src={item.imageUrl} 
@@ -41,28 +41,28 @@ export default function Cart() {
                 )}
                 
                 <div className="flex-grow">
-                  <h3 className="font-bold text-lg">{item.name}</h3>
-                  <p className="text-gray-600">R {item.price.toFixed(2)}</p>
+                  <h3 className="font-bold text-lg text-black">{item.name}</h3>
+                  <p className="text-black">R {item.price.toFixed(2)}</p>
                 </div>
                 
                 <div className="flex items-center space-x-3">
                   <button
                     onClick={() => decreaseQuantity(item._id)}
-                    className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200"
+                    className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 text-black"
                   >
                     -
                   </button>
-                  <span className="font-medium w-8 text-center">{item.quantity}</span>
+                  <span className="font-medium w-8 text-center text-black">{item.quantity}</span>
                   <button
                     onClick={() => increaseQuantity(item._id)}
-                    className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200"
+                    className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 text-black"
                   >
                     +
                   </button>
                 </div>
                 
                 <div className="text-right ml-6">
-                  <p className="font-bold text-lg">R {(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="font-bold text-lg text-black">R {(item.price * item.quantity).toFixed(2)}</p>
                   <button
                     onClick={() => removeFromCart(item._id)}
                     className="text-red-500 text-sm hover:text-red-700 mt-1"
@@ -86,24 +86,24 @@ export default function Cart() {
         
         {/* Order Summary */}
         <div className="bg-gray-50 rounded-xl p-6 h-fit">
-          <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+          <h2 className="text-xl font-bold mb-4 text-black">Order Summary</h2>
           
           <div className="space-y-3 mb-6">
-            <div className="flex justify-between">
+            <div className="flex justify-between text-black">
               <span>Subtotal</span>
               <span>R {totalPrice.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between text-black">
               <span>Delivery Fee</span>
               <span>{totalPrice > 200 ? 'FREE' : 'R 29.99'}</span>
             </div>
             {totalPrice > 200 && (
-              <div className="text-green-600 text-sm">
+              <div className="text-black text-sm">
                 🎉 You qualify for free delivery!
               </div>
             )}
-            <div className="border-t pt-3 mt-3">
-              <div className="flex justify-between font-bold text-lg">
+            <div className="border-t pt-3 mt-3 border-gray-300">
+              <div className="flex justify-between font-bold text-lg text-black">
                 <span>Total</span>
                 <span>R {(totalPrice + (totalPrice > 200 ? 0 : 29.99)).toFixed(2)}</span>
               </div>
@@ -126,7 +126,7 @@ export default function Cart() {
             </button>
           </div>
           
-          <div className="mt-6 text-sm text-gray-500">
+          <div className="mt-6 text-sm text-black">
             <p className="mb-1">✅ Secure checkout</p>
             <p className="mb-1">✅ 30-minute delivery guarantee</p>
             <p>✅ Free returns within 24 hours</p>

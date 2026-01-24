@@ -1,4 +1,3 @@
-// frontend/src/components/ui/ItemCard.jsx
 export default function ItemCard({ item, onAdd }) {
   return (
     <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow p-6">
@@ -12,10 +11,7 @@ export default function ItemCard({ item, onAdd }) {
       <p className="text-green-600 font-bold mb-4">R {item.price.toFixed(2)}</p>
       
       <button 
-        onClick={() => {
-          console.log('Button clicked for:', item.name); // Debug
-          onAdd(item);
-        }}
+        onClick={onAdd}
         className="w-full bg-green-500 text-white py-3 rounded-lg font-medium hover:bg-green-600 transition-colors"
       >
         Add to Cart

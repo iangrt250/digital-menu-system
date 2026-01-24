@@ -1,4 +1,3 @@
-// frontend/src/components/common/Navbar.jsx
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 
@@ -10,7 +9,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <Link to="/" className="text-2xl font-bold text-blue-600">
-            🍽️ FoodHub
+             Tapiwa Restaurant
           </Link>
           
           <div className="flex items-center space-x-6">
