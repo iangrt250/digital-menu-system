@@ -15,6 +15,7 @@ app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173'
 }));
 app.use(express.json());
+app.use('/api/payment', require('./routes/payment'));
 
 // Routes
 app.use('/api/menu', menuRoutes);

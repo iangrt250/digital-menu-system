@@ -1,18 +1,36 @@
+// frontend/src/components/common/Navbar.jsx
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
-import { ShoppingCart } from 'lucide-react'; // npm install lucide-react
 
 export default function Navbar() {
-  const { cart } = useCart();
+  const { totalItems } = useCart();
+
   return (
-    <nav className="bg-white shadow-lg sticky top-0 z-50">
-      <div className="container mx-auto px-6 py-4">
+    <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+      <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
-          <Link to="/" className="text-2xl font-bold text-gray-800">🍕 FoodHub</Link>
-          <Link to="/cart" className="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
-            <ShoppingCart size={20} />
-            <span>{cart.length}</span>
+          <Link to="/" className="text-2xl font-bold text-blue-600">
+            🍽️ FoodHub
           </Link>
+          
+          <div className="flex items-center space-x-6">
+            <Link to="/menu" className="text-gray-700 hover:text-blue-600 font-medium">
+              Menu
+            </Link>
+            
+            <Link to="/cart" className="relative">
+              <span className="text-gray-700 hover:text-blue-600 font-medium">Cart</span>
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+            
+            <Link to="/checkout" className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700">
+              Checkout
+            </Link>
+          </div>
         </div>
       </div>
     </nav>

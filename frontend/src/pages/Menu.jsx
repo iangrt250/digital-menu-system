@@ -115,7 +115,7 @@ export default function Menu() {
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800">🍔 Our Menu</h1>
+        <h1 className="text-4xl font-bold text-gray-800">🍔 Ian Menu</h1>
         <div className={`px-3 py-1 rounded-full text-sm ${
           backendStatus === 'connected' ? 'bg-green-100 text-green-800' :
           backendStatus === 'failed' ? 'bg-yellow-100 text-yellow-800' :
