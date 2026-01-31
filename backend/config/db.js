@@ -1,13 +1,16 @@
-const mongoose = require('mongoose');
+// Option A: Supabase Client (Recommended)
+const { createClient } = require('@supabase/supabase-js');
 
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.error('❌ MongoDB Error:', error);
-    process.exit(1);
-  }
-};
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-module.exports = connectDB;
+module.exports = supabase;
+
+// Option B: Raw PostgreSQL (if needed)
+const { Pool } = require('pg');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
+module.exports = pool;

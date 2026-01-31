@@ -1,7 +1,8 @@
+// backend/routes/payment.js
 const express = require('express');
 const router = express.Router();
-const { createCheckoutSession } = require('../controllers/paymentController');
+const { createPaymentIntent } = require('../controllers/paymentController'); // Fixed path
 
-router.post('/create-checkout-session', createCheckoutSession);
+router.post('/create-payment-intent', createPaymentIntent);
 
 module.exports = router;
