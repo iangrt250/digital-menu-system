@@ -34,17 +34,15 @@ export default function Menu() {
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-8 text-gray-800">🍔 Menu</h1>
-      {menuItems.length === 0 ? (
-        <p className="text-xl text-gray-500">No items available. Admin needs to add menu items.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {menuItems.map(item => (
-            <ItemCard key={item._id} item={item} onAdd={addToCart} />
-          ))}
-        </div>
-      )}
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8">
+  {menu.map(item => (
+    <div key={item.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
+      <h3 className="text-xl font-bold mb-2">{item.name}</h3>
+      <p className="text-gray-600 mb-4">{item.description}</p>
+      <p className="text-2xl font-bold text-green-600">R{item.price}</p>
+      <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm mt-2">
+        {item.category}
+      </span>
     </div>
-  );
-}
+  ))}
+</div>
