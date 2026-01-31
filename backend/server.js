@@ -1,7 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const supabase = require('./config/db');  // Updated import
+const menuRoutes = require('./routes/menu');  // ← ADD THIS
+const paymentRoutes = require('./routes/payment');
 
 const app = express();
 
@@ -11,18 +12,12 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Test connection
+// ADD THESE ROUTES:
+app.use('/api/menu', menuRoutes);     // ← CRITICAL LINE
+app.use('/api/payment', paymentRoutes);
+
 app.get('/', async (req, res) => {
-  try {
-    const { data, error } = await supabase.from('test').select('*').limit(1);
-    res.json({ 
-      message: 'Supabase Restaurant API ✅', 
-      connected: !error,
-      env: process.env.NODE_ENV 
-    });
-  } catch (err) {
-    res.status(500).json({ error: 'Database connection failed', details: err.message });
-  }
+  res.json({ message: 'Supabase Restaurant API ✅' });
 });
 
 const PORT = process.env.PORT || 5000;
