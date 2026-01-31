@@ -1,11 +1,17 @@
+// backend/routes/menu.js
 const express = require('express');
 const router = express.Router();
-const pool = require('../config/db');
+const supabase = require('../config/supabase');
 
 router.get('/', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM menu ORDER BY category');
-    res.json(result.rows);
+    const { data: menu, error } = await supabase
+      .from('menu')
+      .select('*')
+      .order('category');
+    
+    if (error) throw error;
+    res.json(menu || []);
   } catch (error) {
     console.error('Menu query error:', error);
     res.status(500).json({ error: error.message });
