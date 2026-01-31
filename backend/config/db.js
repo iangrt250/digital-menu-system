@@ -1,16 +1,9 @@
-// Option A: Supabase Client (Recommended)
+// backend/config/db.js
 const { createClient } = require('@supabase/supabase-js');
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY  // ← This matches Render env var name
+);
 
 module.exports = supabase;
-
-// Option B: Raw PostgreSQL (if needed)
-const { Pool } = require('pg');
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
-});
-module.exports = pool;
