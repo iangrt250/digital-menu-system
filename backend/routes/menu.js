@@ -1,19 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const supabase = require('../config/db');
+const pool = require('../config/db');
 
-// GET /api/menu
 router.get('/', async (req, res) => {
   try {
-    const { data, error } = await supabase
-      .from('menu')
-      .select('*')
-      .order('category');
-    
-    if (error) throw error;
-    res.json(data || []);  // Empty array if no data
+    const result = await pool.query('SELECT * FROM menu ORDER BY category');
+    res.json(result.rows);
   } catch (error) {
-    console.error('Menu error:', error);
+    console.error('Menu query error:', error);
     res.status(500).json({ error: error.message });
   }
 });
