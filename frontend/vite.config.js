@@ -1,12 +1,10 @@
+// vite.config.js - CommonJS format (Vercel safe)
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: './',
-  define: {
-    global: 'globalThis',
-  },
+  base: '/',
   build: {
     outDir: 'dist'
   }
