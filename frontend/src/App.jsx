@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 function App() {
   const [categories, setCategories] = useState([]);
   const [promotions, setPromotions] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [categoryItems, setCategoryItems] = useState([]);
 
   useEffect(() => {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -11,6 +12,14 @@ function App() {
     fetch(`${API_URL}/api/categories`).then(res => res.json()).then(setCategories);
     fetch(`${API_URL}/api/promotions`).then(res => res.json()).then(setPromotions);
   }, []);
+
+  const loadCategoryItems = async (categoryId) => {
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const response = await fetch(`${API_URL}/api/menu?category_id=${categoryId}`);
+    const items = await response.json();
+    setCategoryItems(items);
+    setActiveCategory(categoryId);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-400 via-red-500 to-yellow-500">
@@ -22,9 +31,7 @@ function App() {
               <div className="w-14 h-14 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <span className="text-2xl">🍔</span>
               </div>
-              <div>
-                <h1 className="text-3xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">RESTAURANT</h1>
-              </div>
+              <h1 className="text-3xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">RESTAURANT</h1>
             </div>
           </div>
         </div>
@@ -43,7 +50,7 @@ function App() {
         </div>
       </section>
 
-      {/* 🔥 PROMOTIONS SECTION */}
+      {/* 🔥 PROMOTIONS */}
       {promotions.length > 0 && (
         <section className="py-20 bg-white/90 backdrop-blur-xl -mt-12 relative z-10">
           <div className="max-w-6xl mx-auto px-6">
@@ -58,9 +65,12 @@ function App() {
                   <p className="opacity-90 mb-8">{promo.description}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-3xl font-black">{promo.discount}% OFF</span>
-                    <Link to="/promotions" className="bg-white text-orange-500 px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-orange-50 transition-all">
+                    <button 
+                      onClick={() => alert(`${promo.title} - ${promo.discount}% OFF!`)}
+                      className="bg-white text-orange-500 px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-orange-50 transition-all"
+                    >
                       View Deal
-                    </Link>
+                    </button>
                   </div>
                 </div>
               ))}
@@ -79,44 +89,47 @@ function App() {
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {categories.map(category => (
-              <Link 
+              <button
                 key={category.id}
-                to={`/category/${category.id}`}
+                onClick={() => loadCategoryItems(category.id)}
                 className="group relative bg-white/80 backdrop-blur-sm rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 border-4 border-white/50 hover:border-orange-200 h-64 flex flex-col items-center justify-center text-center overflow-hidden"
-                style={{ borderColor: category.color + '20', '--category-color': category.color }}
               >
                 <div 
                   className="w-24 h-24 rounded-2xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-4xl shadow-2xl mb-6 group-hover:scale-110 transition-all duration-300"
-                  style={{ backgroundColor: category.color }}
                 >
                   <span>{category.icon}</span>
                 </div>
                 <h4 className="text-2xl font-black text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
                   {category.name}
                 </h4>
-                <p className="text-gray-600 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                  View Menu
+                <p className="text-gray-600 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {activeCategory === category.id ? 'Loading...' : 'View Menu'}
                 </p>
                 <div className="absolute inset-0 bg-gradient-to-t from-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl pointer-events-none"></div>
-              </Link>
+              </button>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-24 text-center bg-gradient-to-r from-orange-600 to-red-600 text-white">
-        <div className="max-w-4xl mx-auto px-6">
-          <h3 className="text-4xl md:text-5xl font-black mb-6">Ready to Order?</h3>
-          <p className="text-xl mb-12 opacity-95">Download our app or order online for lightning fast delivery!</p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/order" className="bg-yellow-400 hover:bg-yellow-300 text-gray-900 px-12 py-6 rounded-2xl text-2xl font-black shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all">
-              🍔 Order Now
-            </Link>
-            <Link to="/menu" className="border-4 border-white/50 hover:border-white text-white px-12 py-6 rounded-2xl text-2xl font-bold hover:bg-white/20 transition-all">
-              Full Menu
-            </Link>
-          </div>
+          {/* Category Items Preview */}
+          {activeCategory && categoryItems.length > 0 && (
+            <div className="mt-16">
+              <h4 className="text-3xl font-black text-center mb-12">Featured Items</h4>
+              <div className="grid md:grid-cols-3 gap-8">
+                {categoryItems.slice(0, 6).map(item => (
+                  <div key={item.id} className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all">
+                    <h5 className="text-xl font-bold mb-4">{item.name}</h5>
+                    <p className="text-gray-600 mb-6">{item.description}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-2xl font-black text-green-600">R{item.price}</span>
+                      <button className="bg-orange-500 text-white px-6 py-2 rounded-xl font-bold hover:bg-orange-600">
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
