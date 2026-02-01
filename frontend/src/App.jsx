@@ -1,110 +1,132 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function App() {
-  const [menu, setMenu] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [promotions, setPromotions] = useState([]);
 
   useEffect(() => {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    fetch(`${API_URL}/api/menu`)
-      .then(res => res.json())
-      .then(data => setMenu(data))
-      .catch(err => console.error(err));
+    
+    fetch(`${API_URL}/api/categories`).then(res => res.json()).then(setCategories);
+    fetch(`${API_URL}/api/promotions`).then(res => res.json()).then(setPromotions);
   }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-400 via-red-500 to-yellow-500">
-      {/* Burger King Header */}
-      <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-lg">
+      {/* Header */}
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-xl">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center shadow-lg">
-                <span className="text-2xl font-bold text-white">🍔</span>
+              <div className="w-14 h-14 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-2xl">🍔</span>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">RESTAURANT</h1>
-                <p className="text-sm text-orange-600 font-medium">Have it your way</p>
+                <h1 className="text-3xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">RESTAURANT</h1>
               </div>
             </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#menu" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">Menu</a>
-              <a href="#deals" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">Deals</a>
-              <a href="#locations" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">Locations</a>
-            </nav>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-32 pb-24">
-        <div className="absolute inset-0 bg-black/20"></div>
+      {/* Hero */}
+      <section className="relative pt-32 pb-24 overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative max-w-6xl mx-auto px-6 text-center text-white">
-          <h2 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
-            Welcome to<br/>
-            <span className="text-yellow-300">Flavor Town</span>
+          <h2 className="text-6xl md:text-7xl font-black mb-6 leading-tight">
+            Flavor<br/><span className="text-yellow-300">Explosion</span>
           </h2>
-          <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto opacity-90">
-            Fresh, fast, and delicious. Order now and taste the difference!
+          <p className="text-2xl mb-12 max-w-3xl mx-auto opacity-95">
+            Fresh. Bold. Unforgettable. Discover our menu today!
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
-            <button className="bg-yellow-400 hover:bg-yellow-300 text-gray-900 px-12 py-4 rounded-full text-xl font-bold shadow-2xl transform hover:scale-105 transition-all duration-200">
-              Order Now
-            </button>
-            <button className="border-2 border-white/80 hover:border-white text-white px-12 py-4 rounded-full text-xl font-bold hover:bg-white/20 transition-all duration-200">
-              View Menu
-            </button>
-          </div>
         </div>
       </section>
 
-      {/* Menu Section */}
-      <section id="menu" className="py-24 bg-white/80 backdrop-blur-md">
+      {/* 🔥 PROMOTIONS SECTION */}
+      {promotions.length > 0 && (
+        <section className="py-20 bg-white/90 backdrop-blur-xl -mt-12 relative z-10">
+          <div className="max-w-6xl mx-auto px-6">
+            <h3 className="text-4xl font-black text-center text-gray-900 mb-16 bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+              🔥 Limited Time Deals
+            </h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              {promotions.slice(0, 3).map(promo => (
+                <div key={promo.id} className="group bg-gradient-to-br from-orange-500 to-red-500 rounded-3xl p-10 text-white shadow-2xl hover:scale-105 transition-all duration-300 border-4 border-white/20">
+                  <div className="text-5xl mb-6">🎉</div>
+                  <h4 className="text-2xl font-black mb-4">{promo.title}</h4>
+                  <p className="opacity-90 mb-8">{promo.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-3xl font-black">{promo.discount}% OFF</span>
+                    <Link to="/promotions" className="bg-white text-orange-500 px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-orange-50 transition-all">
+                      View Deal
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Categories Grid */}
+      <section className="py-24 bg-gradient-to-b from-white/70 to-orange-50/50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-20">
-            <h3 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Our Menu</h3>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Fresh ingredients. Bold flavors. Made just for you.</p>
+            <h3 className="text-5xl font-black text-gray-900 mb-6">🍽️ Explore Categories</h3>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Find your favorites or discover something new</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {menu.map((item) => (
-              <div key={item.id} className="group bg-gradient-to-b from-white to-gray-50 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-orange-100">
-                <div className="w-20 h-20 bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl">🍔</span>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {categories.map(category => (
+              <Link 
+                key={category.id}
+                to={`/category/${category.id}`}
+                className="group relative bg-white/80 backdrop-blur-sm rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 border-4 border-white/50 hover:border-orange-200 h-64 flex flex-col items-center justify-center text-center overflow-hidden"
+                style={{ borderColor: category.color + '20', '--category-color': category.color }}
+              >
+                <div 
+                  className="w-24 h-24 rounded-2xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-4xl shadow-2xl mb-6 group-hover:scale-110 transition-all duration-300"
+                  style={{ backgroundColor: category.color }}
+                >
+                  <span>{category.icon}</span>
                 </div>
-                <h4 className="text-2xl font-black text-gray-900 mb-4 text-center group-hover:text-orange-600 transition-colors">
-                  {item.name}
+                <h4 className="text-2xl font-black text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
+                  {category.name}
                 </h4>
-                <p className="text-gray-600 mb-6 text-center leading-relaxed">
-                  {item.description || 'Freshly prepared with premium ingredients'}
+                <p className="text-gray-600 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                  View Menu
                 </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-3xl font-black bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent">
-                    R{item.price}
-                  </span>
-                  <span className="px-6 py-2 bg-orange-100 text-orange-800 rounded-full text-sm font-bold">
-                    {item.category}
-                  </span>
-                </div>
-              </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl pointer-events-none"></div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
+      {/* CTA Section */}
+      <section className="py-24 text-center bg-gradient-to-r from-orange-600 to-red-600 text-white">
+        <div className="max-w-4xl mx-auto px-6">
+          <h3 className="text-4xl md:text-5xl font-black mb-6">Ready to Order?</h3>
+          <p className="text-xl mb-12 opacity-95">Download our app or order online for lightning fast delivery!</p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link to="/order" className="bg-yellow-400 hover:bg-yellow-300 text-gray-900 px-12 py-6 rounded-2xl text-2xl font-black shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all">
+              🍔 Order Now
+            </Link>
+            <Link to="/menu" className="border-4 border-white/50 hover:border-white text-white px-12 py-6 rounded-2xl text-2xl font-bold hover:bg-white/20 transition-all">
+              Full Menu
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 mt-24">
+      <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center mx-4">
-              <span className="text-2xl">🍔</span>
-            </div>
+          <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
+            <span className="text-3xl">🍔</span>
           </div>
-          <p className="text-xl mb-6 opacity-90">© 2026 Restaurant. Have it your way.</p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm opacity-75">
-            <a href="#" className="hover:text-orange-400 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-orange-400 transition-colors">Terms of Use</a>
-            <a href="#" className="hover:text-orange-400 transition-colors">Contact Us</a>
-          </div>
+          <p className="text-xl mb-8 opacity-90">© 2026 Restaurant. All rights reserved.</p>
         </div>
       </footer>
     </div>

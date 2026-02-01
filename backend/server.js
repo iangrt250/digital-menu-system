@@ -15,6 +15,9 @@ app.use(express.json());
 // ADD THESE ROUTES:
 app.use('/api/menu', menuRoutes);     // ← CRITICAL LINE
 app.use('/api/payment', paymentRoutes);
+app.use('/api/categories', require('./routes/categories'));
+app.use('/api/promotions', require('./routes/promotions'));
+
 
 app.get('/', async (req, res) => {
   res.json({ message: 'Supabase Restaurant API ✅' });
