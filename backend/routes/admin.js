@@ -81,4 +81,4 @@ router.delete('/menu/:id', verifyAdmin, async (req, res) => {
   res.json({ success: true });
 });
 
-module.exports = { router: router, verifyAdmin };
+module.exports = router;  // Export just the router
