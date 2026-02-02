@@ -1,14 +1,17 @@
 const express = require('express');
-const cors = require('cors');  // ← ADD THIS LINE
+const cors = require('cors');
 const app = express();
 
-// ← ADD CORS BEFORE ALL ROUTES (THIS FIXES EVERYTHING)
+// ✅ CRITICAL: CORS FIRST (before ALL routes)
 app.use(cors({
   origin: [
-    'https://digital-menu-dv7tk810k-ians-projects-15707d0d.vercel.app',
+    'https://digital-menu-ten-gamma.vercel.app',
+    'https://digital-menu-*.vercel.app',
     'http://localhost:5173'
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());
@@ -22,4 +25,7 @@ app.use('/api/admin', require('./routes/admin'));
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
+  console.log('✅ CORS enabled for Vercel + localhost');
 });
+
+module.exports = app;
