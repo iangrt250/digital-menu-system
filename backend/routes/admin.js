@@ -10,7 +10,11 @@ const JWT_SECRET = 'your-super-secret-jwt-key-change-this';
 // Admin Login
 router.post('/login', async (req, res) => {
   try {
+    console.log('Admin login attempt:', req.body.email); // DEBUG
+    
     const { email, password } = req.body;
+    
+    // Check if admin exists first
     const { data: admin, error } = await supabase
       .from('admins')
       .select('*')
@@ -18,16 +22,38 @@ router.post('/login', async (req, res) => {
       .eq('is_active', true)
       .single();
 
-    if (error || !admin || !bcrypt.compareSync(password, admin.password_hash)) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+    console.log('Admin found:', !!admin, error?.message); // DEBUG
+
+    if (error || !admin) {
+      console.log('No admin or error:', error?.message);
+      return res.status(401).json({ error: 'No active admin found' });
     }
 
-    const token = jwt.sign({ id: admin.id, email: admin.email, role: admin.role }, JWT_SECRET, { expiresIn: '24h' });
-    res.json({ token, user: { email: admin.email, role: admin.role } });
+    const isValidPassword = bcrypt.compareSync(password, admin.password_hash);
+    console.log('Password valid:', isValidPassword); // DEBUG
+
+    if (!isValidPassword) {
+      return res.status(401).json({ error: 'Invalid password' });
+    }
+
+    const token = jwt.sign({ 
+      id: admin.id, 
+      email: admin.email, 
+      role: admin.role 
+    }, process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this', { 
+      expiresIn: '24h' 
+    });
+    
+    res.json({ 
+      token, 
+      user: { email: admin.email, role: admin.role } 
+    });
   } catch (error) {
+    console.error('Login error:', error);
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Middleware to verify admin token
 const verifyAdmin = (req, res, next) => {
