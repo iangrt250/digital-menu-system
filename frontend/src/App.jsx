@@ -5,6 +5,7 @@ function App() {
   const [menu, setMenu] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
     const API_URL = import.meta.env.VITE_API_URL || 'https://restaurant-api-nssp.onrender.com';
@@ -22,6 +23,25 @@ function App() {
       });
   }, []);
 
+  // Filter menu by selected category
+  const filteredMenu = selectedCategory === 'all' 
+    ? menu 
+    : menu.filter(item => item.category?.toLowerCase() === selectedCategory.toLowerCase());
+
+  // Category click handler
+  const handleCategoryClick = (categoryName) => {
+    const catValue = categoryName.toLowerCase();
+    setSelectedCategory(catValue === selectedCategory ? 'all' : catValue);
+    
+    // Scroll to menu section smoothly
+    setTimeout(() => {
+      document.getElementById('menu-section')?.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 100);
+  };
+
   // YOUR SUPABASE STORAGE IMAGES - HERO
   const heroImages = [
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burger.jpg',
@@ -33,14 +53,15 @@ function App() {
 
   // SUPABASE STORAGE IMAGES - CATEGORIES
   const categories = [
-    {id: 1, name: 'Burgers', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burgers-cat.jpg', color: '#FF6B35'},
-    {id: 2, name: 'Pizza', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/pizza-cat.jpg', color: '#F7931E'},
-    {id: 3, name: 'Sides', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/sides-cat.jpg', color: '#FFD23F'},
-    {id: 4, name: 'Desserts', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/desserts-cat.jpg', color: '#FF69B4'},
-    {id: 5, name: 'Drinks', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/drinks-cat.jpg', color: '#00CED1'},
-    {id: 6, name: 'Strips', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/strips-cat.jpg', color: '#659191'},
-    {id: 7, name: 'Wings', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/wings-cat.jpg', color: '#300c7d'},
-    {id: 8, name: 'Hot Drinks', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/hot-cat.jpg', color: '#194e4f'}
+    {id: 1, name: 'All', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burgers-cat.jpg', color: '#FF6B35'},
+    {id: 2, name: 'Burgers', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burgers-cat.jpg', color: '#FF6B35'},
+    {id: 3, name: 'Pizza', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/pizza-cat.jpg', color: '#F7931E'},
+    {id: 4, name: 'Sides', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/sides-cat.jpg', color: '#FFD23F'},
+    {id: 5, name: 'Desserts', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/desserts-cat.jpg', color: '#FF69B4'},
+    {id: 6, name: 'Drinks', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/drinks-cat.jpg', color: '#00CED1'},
+    {id: 7, name: 'Strips', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/strips-cat.jpg', color: '#659191'},
+    {id: 8, name: 'Wings', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/wings-cat.jpg', color: '#300c7d'},
+    {id: 9, name: 'Hot Drinks', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/hot-cat.jpg', color: '#194e4f'}
   ];
 
   // Slideshow auto-rotate - 8 seconds
@@ -110,37 +131,126 @@ function App() {
         </div>
       </section>
 
-      {/* Categories */}
+      {/* CATEGORIES WITH FILTERING */}
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <h3 className="text-4xl font-black text-center text-gray-900 mb-16">🍽️ Categories</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {categories.map(cat => (
-              <div key={cat.id} className="group text-center p-8 rounded-3xl bg-gradient-to-b from-gray-50 to-white shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 border hover:border-orange-200 overflow-hidden">
-                <div className="w-full h-32 mb-4 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 group-hover:scale-105 transition-transform duration-300 relative">
-                  <img 
-                    src={cat.image}
-                    alt={cat.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
-                    }}
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-orange-500 to-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                  <div className="absolute inset-0 flex items-center justify-center text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    🍽️
+            {categories.map(cat => {
+              const isActive = selectedCategory === 'all' 
+                ? cat.name === 'All' 
+                : selectedCategory.toLowerCase() === cat.name.toLowerCase();
+              
+              return (
+                <div 
+                  key={cat.id} 
+                  className={`group text-center p-8 rounded-3xl cursor-pointer transition-all duration-300 hover:-translate-y-2 ${
+                    isActive
+                      ? 'ring-4 ring-orange-400 bg-gradient-to-br from-orange-50 to-red-50 border-4 border-orange-400 shadow-2xl scale-105'
+                      : 'bg-gradient-to-b from-gray-50 to-white shadow-lg hover:shadow-2xl border hover:border-orange-200'
+                  }`}
+                  onClick={() => handleCategoryClick(cat.name)}
+                >
+                  <div className="w-full h-32 mb-4 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 group-hover:scale-105 transition-transform duration-300 relative">
+                    <img 
+                      src={cat.image}
+                      alt={cat.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-orange-500 to-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+                    <div className="absolute inset-0 flex items-center justify-center text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      🍽️
+                    </div>
                   </div>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2">{cat.name}</h4>
+                  {isActive && (
+                    <div className="text-orange-500 text-sm font-bold">
+                      {filteredMenu.length} items
+                    </div>
+                  )}
                 </div>
-                <h4 className="text-xl font-bold text-gray-900 mb-2">{cat.name}</h4>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
+      {/* MENU ITEMS - FILTERED */}
+      <section id="menu-section" className="py-24 bg-gradient-to-b from-yellow-50 to-orange-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h3 className="text-4xl md:text-5xl font-black text-gray-900 mb-6">
+              {selectedCategory === 'all' ? '🍔 Our Menu' : `🍔 ${selectedCategory.toUpperCase()}`}
+            </h3>
+            <p className="text-xl text-gray-700">
+              {filteredMenu.length} delicious {selectedCategory === 'all' ? 'items' : selectedCategory.toLowerCase()} available
+            </p>
+          </div>
+
+          {filteredMenu.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {filteredMenu.map((item) => (
+                <article 
+                  key={item.id}
+                  className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-white/50 hover:border-orange-200 hover:-translate-y-3"
+                >
+                  <div className="h-56 bg-gradient-to-br from-orange-400 via-red-500 to-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 relative overflow-hidden">
+                    {item.image_url ? (
+                      <img 
+                        src={`${item.image_url.startsWith('http') ? item.image_url : `https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/${item.image_url}`}`} 
+                        alt={item.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <span className="text-6xl drop-shadow-lg absolute inset-0 flex items-center justify-center z-10" style={{display: item.image_url ? 'none' : 'flex'}}>
+                      🍔
+                    </span>
+                  </div>
+
+                  <div className="p-8">
+                    <h4 className="text-2xl font-black text-gray-900 mb-4 group-hover:text-orange-600 transition-colors">
+                      {item.name}
+                    </h4>
+                    <p className="text-gray-600 mb-6 leading-relaxed min-h-[4rem]">
+                      {item.description || 'Freshly prepared with premium ingredients'}
+                    </p>
+                    
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      <span className="text-3xl font-black bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent">
+                        R{item.price}
+                      </span>
+                      <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-4 rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all group-hover:scale-105">
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="col-span-full text-center py-32">
+              <div className="text-8xl mb-8 opacity-20">🍽️</div>
+              <h3 className="text-4xl font-black text-gray-500 mb-4">
+                No {selectedCategory} items yet
+              </h3>
+              <p className="text-xl text-gray-400 mb-8">
+                Check back soon for delicious {selectedCategory} options!
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* DOWNLOAD APP SECTION */}
-      <section className="py-24 bg-gradient-to-b from-yellow-50 to-orange-50">
+      <section className="py-24 bg-gradient-to-b from-orange-50 to-yellow-50">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="mb-20">
             <h3 className="text-4xl md:text-5xl font-black text-gray-900 mb-6">📱 Download The App</h3>
@@ -171,15 +281,6 @@ function App() {
                 <p className="text-2xl font-black">Google Play</p>
               </div>
             </a>
-          </div>
-
-          <div className="mt-20 opacity-20">
-            <div className="w-64 h-128 bg-gray-300 rounded-3xl mx-auto relative shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 rounded-3xl opacity-30 animate-pulse"></div>
-              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center">
-                <span className="text-2xl">📱</span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -271,7 +372,7 @@ function App() {
       {/* FIXED START ORDER BUTTON */}
       <Link 
         to="/menu" 
-        className="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white p-6 rounded-full shadow-2xl hover:shadow-3xl text-xl font-black w-16 h-16 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+        className="fixed bottom-8 right-8 z-[100] bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white p-6 rounded-full shadow-2xl hover:shadow-3xl text-xl font-black w-20 h-20 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 animate-pulse"
       >
         🛒
       </Link>
