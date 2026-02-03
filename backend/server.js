@@ -22,6 +22,12 @@ app.use('/api/categories', require('./routes/categories'));
 app.use('/api/promotions', require('./routes/promotions'));
 app.use('/api/admin', require('./routes/admin'));
 
+const fileUpload = require('express-fileupload');
+app.use(fileUpload({
+  createParentPath: true
+}));
+
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -48,6 +48,37 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
+// Upload menu image (admin only)
+router.post('/upload-image', verifyAdmin, async (req, res) => {
+  try {
+    if (!req.files || !req.files.image) {
+      return res.status(400).json({ error: 'No image provided' });
+    }
+
+    const image = req.files.image;
+    const fileName = `menu-images/${Date.now()}-${image.name}`;
+
+    const { data, error } = await supabase.storage
+      .from('menu-images')
+      .upload(fileName, image.data, {
+        cacheControl: '3600',
+        upsert: false
+      });
+
+    if (error) throw error;
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('menu-images')
+      .getPublicUrl(fileName);
+
+    res.json({ image_url: publicUrl });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 // Protected routes
 const verifyAdmin = (req, res, next) => {
   const token = req.headers.authorization?.replace('Bearer ', '');
