@@ -41,11 +41,11 @@ function App() {
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/drink.jpg'
   ];
 
-  // Slideshow auto-rotate
+  // Slideshow auto-rotate - 8 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 4000);
+    }, 8000);
     return () => clearInterval(interval);
   }, [heroImages.length]);
 
@@ -81,7 +81,7 @@ function App() {
         </div>
       </header>
 
-      {/* HERO SLIDESHOW - YOUR SUPABASE IMAGES */}
+      {/* HERO SLIDESHOW - CLEAN IMAGES ONLY */}
       <section className="relative h-screen w-full overflow-hidden -mt-24 pt-28">
         <div className="absolute inset-0">
           <div 
@@ -90,21 +90,6 @@ function App() {
               backgroundImage: `url(${heroImages[currentSlide]})`,
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/80 to-orange-500/60" />
-        </div>
-
-        <div className="absolute inset-0 flex items-center justify-center text-white z-10">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight drop-shadow-2xl">
-              Welcome to<br className="md:block" />
-              <span className="bg-gradient-to-r from-orange-400/90 to-yellow-400/90 bg-clip-text text-transparent drop-shadow-2xl">
-                Flavor Town
-              </span>
-            </h2>
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
-              Fresh ingredients, bold flavors, made with love. Order now or visit us today!
-            </p>
-          </div>
         </div>
 
         {/* Slide Dots */}
