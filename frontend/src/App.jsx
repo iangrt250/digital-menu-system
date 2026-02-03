@@ -151,7 +151,7 @@ function App() {
                   }`}
                   onClick={() => handleCategoryClick(cat.name)}
                 >
-                  <div className="w-full h-32 mb-4 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 group-hover:scale-105 transition-transform duration-300 relative">
+                  <div className="w-full h-32 mb-4 overflow-hidden group-hover:scale-105 transition-transform duration-300 relative">
                     <img 
                       src={cat.image}
                       alt={cat.name}
