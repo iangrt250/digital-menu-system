@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 function App() {
   const [menu, setMenu] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
@@ -21,24 +20,24 @@ function App() {
         setMenu([]); 
         setLoading(false);
       });
-
-    // Mock categories
-    setCategories([
-      {id: 1, name: 'Burgers', icon: '🍔', color: '#FF6B35'},
-      {id: 2, name: 'Pizza', icon: '🍕', color: '#F7931E'},
-      {id: 3, name: 'Sides', icon: '🍟', color: '#FFD23F'},
-      {id: 4, name: 'Desserts', icon: '🍰', color: '#FF69B4'},
-      {id: 5, name: 'Drinks', icon: '🥤', color: '#00CED1'}
-    ]);
   }, []);
 
-  // YOUR SUPABASE STORAGE IMAGES
+  // YOUR SUPABASE STORAGE IMAGES - HERO
   const heroImages = [
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burger.jpg',
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/pizza.jpg',
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/fries.jpg',
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/dessert.jpg',
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/drink.jpg'
+  ];
+
+  // SUPABASE STORAGE IMAGES - CATEGORIES (Upload these to your bucket)
+  const categories = [
+    {id: 1, name: 'Burgers', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burgers-cat.jpg', color: '#FF6B35'},
+    {id: 2, name: 'Pizza', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/pizza-cat.jpg', color: '#F7931E'},
+    {id: 3, name: 'Sides', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/sides-cat.jpg', color: '#FFD23F'},
+    {id: 4, name: 'Desserts', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/desserts-cat.jpg', color: '#FF69B4'},
+    {id: 5, name: 'Drinks', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/drinks-cat.jpg', color: '#00CED1'}
   ];
 
   // Slideshow auto-rotate - 8 seconds
@@ -62,7 +61,7 @@ function App() {
 
   return (
     <>
-      {/* Header - NO ADMIN LOGIN */}
+      {/* Header */}
       <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-xl border-b border-orange-100">
         <div className="max-w-6xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
@@ -81,7 +80,7 @@ function App() {
         </div>
       </header>
 
-      {/* HERO SLIDESHOW - CLEAN IMAGES ONLY */}
+      {/* HERO SLIDESHOW */}
       <section className="relative h-screen w-full overflow-hidden -mt-24 pt-28">
         <div className="absolute inset-0">
           <div 
@@ -108,15 +107,28 @@ function App() {
         </div>
       </section>
 
-      {/* Categories */}
+      {/* Categories - REAL SUPABASE IMAGES */}
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <h3 className="text-4xl font-black text-center text-gray-900 mb-16">🍽️ Categories</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {categories.map(cat => (
-              <div key={cat.id} className="group text-center p-8 rounded-3xl bg-gradient-to-b from-gray-50 to-white shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 border hover:border-orange-200">
-                <div className="text-5xl mb-4" style={{ color: cat.color }}>
-                  {cat.icon}
+              <div key={cat.id} className="group text-center p-8 rounded-3xl bg-gradient-to-b from-gray-50 to-white shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 border hover:border-orange-200 overflow-hidden">
+                {/* Category Image */}
+                <div className="w-full h-32 mb-4 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 group-hover:scale-105 transition-transform duration-300 relative">
+                  <img 
+                    src={cat.image}
+                    alt={cat.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-orange-500 to-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+                  <div className="absolute inset-0 flex items-center justify-center text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {cat.icon || '🍽️'}
+                  </div>
                 </div>
                 <h4 className="text-xl font-bold text-gray-900 mb-2">{cat.name}</h4>
               </div>
