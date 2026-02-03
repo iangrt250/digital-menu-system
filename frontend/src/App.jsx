@@ -51,7 +51,7 @@ function App() {
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/drink.jpg'
   ];
 
-  // SUPABASE STORAGE IMAGES - CATEGORIES
+  // SUPABASE STORAGE IMAGES - CATEGORIES (FIXED: No whitespace, small gaps, no borders)
   const categories = [
     {id: 1, name: 'All', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burgers-cat.jpg', color: '#FF6B35'},
     {id: 2, name: 'Burgers', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burgers-cat.jpg', color: '#FF6B35'},
@@ -131,11 +131,11 @@ function App() {
         </div>
       </section>
 
-      {/* CATEGORIES WITH FILTERING */}
+      {/* CATEGORIES WITH FIXED SPACING (Small gaps, no whitespace, no borders) */}
       <section className="py-20 bg-white">
-        <div className="max-w-2xl mx-auto px-2">
+        <div className="max-w-6xl mx-auto px-6">
           <h3 className="text-4xl font-black text-center text-gray-900 mb-16">🍽️ Categories</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {categories.map(cat => {
               const isActive = selectedCategory === 'all' 
                 ? cat.name === 'All' 
@@ -144,27 +144,23 @@ function App() {
               return (
                 <div 
                   key={cat.id} 
-                  className={`group text-center p-8 rounded-3xl cursor-pointer transition-all duration-300 hover:-translate-y-2 ${
+                  className={`group text-center p-6 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 ${
                     isActive
-                      ? 'ring-4 ring-orange-400 bg-gradient-to-br from-orange-50 to-red-50 border-4 border-orange-400 shadow-2xl scale-105'
-                      : 'bg-gradient-to-b from-gray-50 to-white shadow-lg hover:shadow-2xl border hover:border-orange-200'
+                      ? 'ring-4 ring-orange-400 bg-gradient-to-br from-orange-50 to-red-50 shadow-xl scale-105'
+                      : 'bg-gradient-to-b from-gray-50 to-white shadow-md hover:shadow-xl'
                   }`}
                   onClick={() => handleCategoryClick(cat.name)}
                 >
-                  <div className="w-full h-32 mb-4 overflow-hidden group-hover:scale-105 transition-transform duration-300 relative">
+                  <div className="w-full h-32 mb-4 rounded-xl overflow-hidden bg-gray-100 group-hover:scale-105 transition-transform duration-300">
                     <img 
                       src={cat.image}
                       alt={cat.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
+                        e.target.onerror = null;
+                        e.target.src = 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burger.jpg';
                       }}
                     />
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-orange-500 to-red-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      🍽️
-                    </div>
                   </div>
                   <h4 className="text-xl font-bold text-gray-900 mb-2">{cat.name}</h4>
                   {isActive && (
