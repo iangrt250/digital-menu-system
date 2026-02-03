@@ -131,75 +131,145 @@ function App() {
         </div>
       </section>
 
-      {/* CATEGORIES - MODERN GOOGLE-STYLE LAYOUT */}
-      <section className="py-20 bg-white">
+      {/* CATEGORIES - KFC STYLE LAYOUT */}
+      <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-6">
-          <h3 className="text-4xl font-black text-center text-gray-900 mb-16">🍽️ Categories</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-            {categories.map(cat => {
-              const isActive = selectedCategory === 'all' 
-                ? cat.name === 'All' 
-                : selectedCategory.toLowerCase() === cat.name.toLowerCase();
-              
-              return (
-                <button
-                  key={cat.id}
-                  className={`
-                    group relative text-left p-4 rounded-[4px] text-[14px] leading-[22px] font-extrabold
-                    transition-all duration-200 hover:-translate-y-1 cursor-pointer
-                    ${isActive
-                      ? 'text-orange-600 bg-orange-50 shadow-sm ring-2 ring-orange-200 scale-[1.02]'
-                      : 'text-gray-900 hover:bg-gray-50 hover:shadow-sm hover:text-gray-900'
-                    }
-                    bg-none border-none h-auto box-border
-                    [-webkit-text-size-adjust:100%] [-webkit-tap-highlight-color:transparent]
-                    font-["National_2_Extrabold","National_2_Medium",-apple-system,BlinkMacSystemFont,"Segoe_UI",Roboto,"Helvetica_Neue",Arial,sans-serif]
-                  `}
-                  style={{
-                    color: '#202124',
-                    '--brandBlack': '#202124',
-                    '--darkGray': '#494949',
-                    '--mediumGrey': '#777474',
-                    '--fontFamilyRegular': '"National 2 Regular"',
-                    '--fontFamilyMedium': '"National 2 Medium"',
-                    '--fontFamilyCondensed': '"National 2 Condensed"',
-                    '--fontFamilyExtrabold': '"National 2 Extrabold"',
-                    fontFamily: 'var(--fontFamilyExtrabold), var(--fontFamilyMedium), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                    fontStyle: 'normal',
-                    fontWeight: '700',
-                    textDecoration: 'none',
-                    borderRadius: '4px',
-                    boxSizing: 'border-box'
-                  }}
-                  onClick={() => handleCategoryClick(cat.name)}
-                >
-                  {/* Category Image */}
-                  <div className="w-full h-28 mb-3 rounded-[2px] overflow-hidden bg-gray-100 group-hover:scale-[1.02] transition-transform duration-200">
-                    <img 
-                      src={cat.image}
-                      alt={cat.name}
-                      className="w-full h-full object-cover block"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burger.jpg';
-                      }}
-                    />
-                  </div>
-                  
-                  {/* Category Name */}
-                  <h4 className="text-base font-extrabold text-inherit mb-1 leading-tight">
-                    {cat.name}
-                  </h4>
-                  
-                  {/* Active Indicator */}
-                  {isActive && (
-                    <div className="absolute -top-3 -right-3 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold leading-none">
-                      {filteredMenu.length} items
+          <h3 className="text-4xl font-black text-center text-gray-900 mb-12">🍽️ Categories</h3>
+          
+          <div className="flex flex-col space-y-8">
+            {/* Top Row */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {categories.slice(0, 4).map(cat => {
+                const isActive = selectedCategory === 'all' 
+                  ? cat.name === 'All' 
+                  : selectedCategory.toLowerCase() === cat.name.toLowerCase();
+                
+                return (
+                  <button
+                    key={cat.id}
+                    className={`
+                      relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl
+                      transition-all duration-200 cursor-pointer border-2
+                      ${isActive ? 'border-orange-500 ring-2 ring-orange-200' : 'border-gray-100 hover:border-orange-200'}
+                      group h-48
+                    `}
+                    onClick={() => handleCategoryClick(cat.name)}
+                  >
+                    {/* Category Image */}
+                    <div className="w-full h-3/4 overflow-hidden">
+                      <img 
+                        src={cat.image}
+                        alt={cat.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burger.jpg';
+                        }}
+                      />
                     </div>
-                  )}
-                </button>
-              );
-            })}
+                    
+                    {/* Category Name */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                      <h4 className="text-xl font-bold text-white text-center">
+                        {cat.name}
+                      </h4>
+                    </div>
+                    
+                    {/* Active Indicator */}
+                    {isActive && (
+                      <div className="absolute top-2 right-2 bg-orange-500 text-white text-xs px-3 py-1 rounded-full font-bold">
+                        ✓
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Middle Row */}
+            <div className="grid grid-cols-3 gap-4">
+              {categories.slice(4, 7).map(cat => {
+                const isActive = selectedCategory === 'all' 
+                  ? cat.name === 'All' 
+                  : selectedCategory.toLowerCase() === cat.name.toLowerCase();
+                
+                return (
+                  <button
+                    key={cat.id}
+                    className={`
+                      relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl
+                      transition-all duration-200 cursor-pointer border-2
+                      ${isActive ? 'border-orange-500 ring-2 ring-orange-200' : 'border-gray-100 hover:border-orange-200'}
+                      group h-40
+                    `}
+                    onClick={() => handleCategoryClick(cat.name)}
+                  >
+                    <div className="w-full h-2/3 overflow-hidden">
+                      <img 
+                        src={cat.image}
+                        alt={cat.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    
+                    <div className="p-4">
+                      <h4 className="text-lg font-bold text-gray-900 text-center">
+                        {cat.name}
+                      </h4>
+                    </div>
+                    
+                    {isActive && (
+                      <div className="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">
+                        Active
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Bottom Row */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {categories.slice(7).map(cat => {
+                const isActive = selectedCategory === 'all' 
+                  ? cat.name === 'All' 
+                  : selectedCategory.toLowerCase() === cat.name.toLowerCase();
+                
+                return (
+                  <button
+                    key={cat.id}
+                    className={`
+                      relative bg-white rounded-lg overflow-hidden shadow hover:shadow-lg
+                      transition-all duration-200 cursor-pointer border
+                      ${isActive ? 'border-orange-500' : 'border-gray-100 hover:border-orange-200'}
+                      group h-36 flex items-center p-4
+                    `}
+                    onClick={() => handleCategoryClick(cat.name)}
+                  >
+                    <div className="w-24 h-24 rounded-lg overflow-hidden mr-4">
+                      <img 
+                        src={cat.image}
+                        alt={cat.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <h4 className="text-lg font-bold text-gray-900">
+                        {cat.name}
+                      </h4>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Explore our {cat.name.toLowerCase()} selection
+                      </p>
+                    </div>
+                    
+                    {isActive && (
+                      <div className="absolute top-2 right-2 w-4 h-4 bg-orange-500 rounded-full" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
