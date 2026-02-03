@@ -71,8 +71,8 @@ function App() {
                 <span className="text-3xl">🍔</span>
               </div>
               <div>
-                <h1 className="text-3xl lg:text-4xl font-black bg-gradient-to-r from-gray-900 via-orange-600 to-red-600 bg-clip-text text-transparent">
-                  Flavor Town
+                <h1 className="text-2xl lg:text-2xl font-black bg-gradient-to-r from-gray-900 via-orange-600 to-red-600 bg-clip-text text-transparent">
+                  Tapiwa
                 </h1>
                 <p className="text-lg text-gray-600 font-semibold">Restaurant & Grill</p>
               </div>
