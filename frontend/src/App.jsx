@@ -10,6 +10,7 @@ function App() {
   useEffect(() => {
     const API_URL = import.meta.env.VITE_API_URL || 'https://restaurant-api-nssp.onrender.com';
     
+    // Load menu
     fetch(`${API_URL}/api/menu`)
       .then(res => res.json())
       .then(data => {
@@ -17,10 +18,11 @@ function App() {
         setLoading(false);
       })
       .catch(() => {
-        setMenu([]);
+        setMenu([]); 
         setLoading(false);
       });
 
+    // Mock categories
     setCategories([
       {id: 1, name: 'Burgers', icon: '🍔', color: '#FF6B35'},
       {id: 2, name: 'Pizza', icon: '🍕', color: '#F7931E'},
@@ -30,14 +32,16 @@ function App() {
     ]);
   }, []);
 
+  // YOUR SUPABASE STORAGE IMAGES
   const heroImages = [
-    'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=1400&h=800&fit=crop&auto=format&q=80',
-    'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1400&h=800&fit=crop&auto=format&q=80',
-    'https://images.unsplash.com/photo-1579586140626-3ff1e6639440?w=1400&h=800&fit=crop&auto=format&q=80',
-    'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=1400&h=800&fit=crop&auto=format&q=80',
-    'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=1400&h=800&fit=crop&auto=format&q=80'
+    'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burger.jpg',
+    'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/pizza.jpg',
+    'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/fries.jpg',
+    'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/dessert.jpg',
+    'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/drink.jpg'
   ];
 
+  // Slideshow auto-rotate
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
@@ -58,7 +62,7 @@ function App() {
 
   return (
     <>
-      {/* Header */}
+      {/* Header - NO ADMIN LOGIN */}
       <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-xl border-b border-orange-100">
         <div className="max-w-6xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
@@ -77,21 +81,21 @@ function App() {
         </div>
       </header>
 
-      {/* FIXED Hero - Full viewport height */}
-      <section className="relative h-screen w-full overflow-hidden -mt-24 pt-28"> 
+      {/* HERO SLIDESHOW - YOUR SUPABASE IMAGES */}
+      <section className="relative h-screen w-full overflow-hidden -mt-24 pt-28">
         <div className="absolute inset-0">
           <div 
-            className="w-full h-full bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out opacity-0 animate-fade-in"
+            className="w-full h-full bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out"
             style={{ 
               backgroundImage: `url(${heroImages[currentSlide]})`,
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/70 to-orange-500/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/80 to-orange-500/60" />
         </div>
 
         <div className="absolute inset-0 flex items-center justify-center text-white z-10">
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight drop-shadow-2xl animate-slide-up">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight drop-shadow-2xl">
               Welcome to<br className="md:block" />
               <span className="bg-gradient-to-r from-orange-400/90 to-yellow-400/90 bg-clip-text text-transparent drop-shadow-2xl">
                 Flavor Town
@@ -103,16 +107,16 @@ function App() {
           </div>
         </div>
 
-        {/* Slide dots */}
+        {/* Slide Dots */}
         <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
           {heroImages.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentSlide(idx)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              className={`h-3 rounded-full transition-all duration-300 ${
                 idx === currentSlide 
                   ? 'bg-white w-12 scale-125 shadow-lg' : 
-                  'bg-white/60 hover:bg-white hover:scale-110'
+                  'bg-white/60 hover:bg-white hover:scale-110 w-3'
               }`}
             />
           ))}
@@ -146,10 +150,29 @@ function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {menu.slice(0, 8).map((item) => (
-              <article key={item.id} className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-white/50 hover:border-orange-200 hover:-translate-y-3">
-                <div className="h-56 bg-gradient-to-br from-orange-400 via-red-500 to-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <span className="text-6xl drop-shadow-lg">🍔</span>
+              <article 
+                key={item.id}
+                className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-white/50 hover:border-orange-200 hover:-translate-y-3"
+              >
+                {/* Image/Emoji */}
+                <div className="h-56 bg-gradient-to-br from-orange-400 via-red-500 to-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 relative overflow-hidden">
+                  {item.image_url ? (
+                    <img 
+                      src={`${item.image_url.startsWith('http') ? item.image_url : `https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/${item.image_url}`}`} 
+                      alt={item.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <span className="text-6xl drop-shadow-lg absolute inset-0 flex items-center justify-center z-10" style={{display: item.image_url ? 'none' : 'flex'}}>
+                    🍔
+                  </span>
                 </div>
+
+                {/* Content */}
                 <div className="p-8">
                   <h4 className="text-2xl font-black text-gray-900 mb-4 group-hover:text-orange-600 transition-colors">
                     {item.name}
@@ -157,6 +180,7 @@ function App() {
                   <p className="text-gray-600 mb-6 leading-relaxed min-h-[4rem]">
                     {item.description || 'Freshly prepared with premium ingredients'}
                   </p>
+                  
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                     <span className="text-3xl font-black bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent">
                       R{item.price}
