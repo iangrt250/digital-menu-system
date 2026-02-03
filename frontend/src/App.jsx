@@ -31,7 +31,7 @@ function App() {
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/drink.jpg'
   ];
 
-  // SUPABASE STORAGE IMAGES - CATEGORIES (Fixed IDs)
+  // SUPABASE STORAGE IMAGES - CATEGORIES
   const categories = [
     {id: 1, name: 'Burgers', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burgers-cat.jpg', color: '#FF6B35'},
     {id: 2, name: 'Pizza', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/pizza-cat.jpg', color: '#F7931E'},
@@ -110,14 +110,13 @@ function App() {
         </div>
       </section>
 
-      {/* Categories - REAL SUPABASE IMAGES */}
+      {/* Categories */}
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <h3 className="text-4xl font-black text-center text-gray-900 mb-16">🍽️ Categories</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {categories.map(cat => (
               <div key={cat.id} className="group text-center p-8 rounded-3xl bg-gradient-to-b from-gray-50 to-white shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 border hover:border-orange-200 overflow-hidden">
-                {/* Category Image */}
                 <div className="w-full h-32 mb-4 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 group-hover:scale-105 transition-transform duration-300 relative">
                   <img 
                     src={cat.image}
@@ -148,15 +147,8 @@ function App() {
             <p className="text-xl text-gray-700 max-w-2xl mx-auto">Order your favorite meals on the go!</p>
           </div>
 
-          {/* App Store Buttons */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {/* Apple App Store */}
-            <a 
-              href="https://www.apple.com/app-store/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group bg-black hover:bg-gray-900 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-4 hover:-translate-y-1"
-            >
+            <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer" className="group bg-black hover:bg-gray-900 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-4 hover:-translate-y-1">
               <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                 <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.06 2.47-1.3.03-1.64-.82-3.11-.83-1.45-.01-1.98.78-2.86.78-.91 0-2.02-.47-2.93-.91-.33-.16-.66-.58-.88-.94-.13-.2-.25-.53-.25-.82 0-.84.49-1.85 1.32-1.85.23 0 .46.06.66.26.63.59 1.43 1 2.23 1.23.3.08.71.04 1.02-.22.36-.31.55-.83.55-1.21 0-.39-.14-.9-.6-1.43-1.29-1.52-2.46-3.24-2.47-5.25.01-2.92 2.33-5.15 5.25-5.16 2.94.01 5.23 2.27 5.25 5.17 0 .96-.36 2.07-1.04 2.95-.29.77-.72 1.5-1.22 2.19-.09.12-.18.24-.26.36-.18.26-.42.6-.42.98 0 .66.47 1.38 1.24 1.38.47 0 .89-.27 1.14-.66.17-.27.29-.72.29-1.15 0-.29-.07-.57-.2-.82-.27-.52-.73-1-.73-1.6 0-1.79 1.44-3.19 3.23-3.19s3.23.62 3.23 3.2c0 1.77-1.14 3.18-2.7 3.62 1.12.17 2.05.73 2.66 1.54.66.88 1.02 2.02 1.02 3.25 0 2.74-2.2 5-5 5-.83 0-1.63-.23-2.37-.65-.26-.15-.5-.38-.71-.64-.21-.25-.39-.57-.39-.96 0-.46.31-.88.8-1.02z"/>
@@ -168,13 +160,7 @@ function App() {
               </div>
             </a>
 
-            {/* Google Play Store */}
-            <a 
-              href="https://play.google.com/store/apps" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group bg-white hover:bg-gray-50 border-4 border-gray-200 hover:border-gray-300 text-gray-900 p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-4 hover:-translate-y-1"
-            >
+            <a href="https://play.google.com/store/apps" target="_blank" rel="noopener noreferrer" className="group bg-white hover:bg-gray-50 border-4 border-gray-200 hover:border-gray-300 text-gray-900 p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-4 hover:-translate-y-1">
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform border-2 border-gray-200">
                 <svg className="w-10 h-10 text-green-600" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M4.12 3.45c-.78.78-.78 2.05 0 2.83L8.85 12l-4.73 5.72c-.78.78-.78 2.05 0 2.83.39.39.9.59 1.41.59.52 0 1.03-.2 1.42-.59l7.13-7.12c.39-.39.59-.9.59-1.42 0-.52-.2-1.03-.59-1.42L7.95 3.86a2.07 2.07 0 0 0-1.83-.59c-.51 0-1.03.2-1.42.59zM21 6.5l-3.5 3.5V19h-2v-8.5L13 6.5H9L12.5 10 16 6.5h2z"/>
@@ -187,7 +173,6 @@ function App() {
             </a>
           </div>
 
-          {/* Phone mockup */}
           <div className="mt-20 opacity-20">
             <div className="w-64 h-128 bg-gray-300 rounded-3xl mx-auto relative shadow-2xl">
               <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 rounded-3xl opacity-30 animate-pulse"></div>
@@ -198,6 +183,98 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* SIGN IN SECTION */}
+      <section className="relative py-24 bg-gray-900 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+          style={{ 
+            backgroundImage: `url(${heroImages[0]})`,
+          }}
+        />
+        <div className="relative z-10 max-w-6xl mx-auto px-6">
+          <div className="max-w-md mx-auto bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-10 border border-white/50">
+            <div className="text-center mb-8">
+              <h3 className="text-4xl font-black text-gray-900 mb-4">👋 Sign In</h3>
+              <p className="text-xl text-gray-600">Welcome back! Please sign in to your account</p>
+            </div>
+            <form className="space-y-6">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                <input 
+                  type="email" 
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-4 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-200 transition-all duration-300 text-lg"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                <input 
+                  type="password" 
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-4 rounded-2xl border-2 border-gray-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-200 transition-all duration-300 text-lg"
+                />
+              </div>
+              <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white py-4 px-8 rounded-2xl font-black text-xl shadow-xl hover:shadow-2xl transition-all duration-300">
+                Sign In
+              </button>
+            </form>
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-600">
+                Don't have an account?{' '}
+                <Link to="/signup" className="text-orange-500 font-semibold hover:text-orange-600">Sign up here</Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-gray-900 text-white py-12 border-t border-orange-500/30">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+            <div>
+              <h4 className="text-2xl font-black mb-6 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+                Tapiwa
+              </h4>
+              <p className="text-gray-400 mb-6">Restaurant & Grill - Taste the difference</p>
+              <div className="flex justify-center md:justify-start space-x-6">
+                <a href="#" className="text-xl hover:text-orange-400 transition-colors">📘</a>
+                <a href="#" className="text-xl hover:text-orange-400 transition-colors">📷</a>
+                <a href="#" className="text-xl hover:text-orange-400 transition-colors">🐦</a>
+              </div>
+            </div>
+            <div>
+              <h5 className="text-xl font-bold mb-6">Quick Links</h5>
+              <ul className="space-y-3 text-gray-400">
+                <li><a href="#" className="hover:text-white transition-colors">Menu</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Locations</a></li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="text-xl font-bold mb-6">Contact Info</h5>
+              <div className="space-y-3 text-gray-400">
+                <p>📍 Cape Town, Western Cape</p>
+                <p>📞 +27 123 456 789</p>
+                <p>✉️ info@tapiwa.co.za</p>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+            <p>&copy; 2026 Tapiwa Restaurant. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* FIXED START ORDER BUTTON */}
+      <Link 
+        to="/menu" 
+        className="fixed bottom-8 right-8 z-50 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white p-6 rounded-full shadow-2xl hover:shadow-3xl text-xl font-black w-16 h-16 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+      >
+        🛒
+      </Link>
     </>
   );
 }
