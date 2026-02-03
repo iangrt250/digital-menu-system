@@ -10,7 +10,6 @@ function App() {
   useEffect(() => {
     const API_URL = import.meta.env.VITE_API_URL || 'https://restaurant-api-nssp.onrender.com';
     
-    // Load menu
     fetch(`${API_URL}/api/menu`)
       .then(res => res.json())
       .then(data => {
@@ -18,11 +17,10 @@ function App() {
         setLoading(false);
       })
       .catch(() => {
-        setMenu([]); // Mock data if API fails
+        setMenu([]);
         setLoading(false);
       });
 
-    // Mock categories (CORS safe)
     setCategories([
       {id: 1, name: 'Burgers', icon: '🍔', color: '#FF6B35'},
       {id: 2, name: 'Pizza', icon: '🍕', color: '#F7931E'},
@@ -32,13 +30,12 @@ function App() {
     ]);
   }, []);
 
-  // Hero slideshow
   const heroImages = [
-    'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=1400&h=800&fit=crop&crop=center&auto=format&q=80',
-    'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1400&h=800&fit=crop&crop=center&auto=format&q=80',
-    'https://images.unsplash.com/photo-1579586140626-3ff1e6639440?w=1400&h=800&fit=crop&crop=center&auto=format&q=80',
-    'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=1400&h=800&fit=crop&crop=center&auto=format&q=80',
-    'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=1400&h=800&fit=crop&crop=center&auto=format&q=80'
+    'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=1400&h=800&fit=crop&auto=format&q=80',
+    'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1400&h=800&fit=crop&auto=format&q=80',
+    'https://images.unsplash.com/photo-1579586140626-3ff1e6639440?w=1400&h=800&fit=crop&auto=format&q=80',
+    'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=1400&h=800&fit=crop&auto=format&q=80',
+    'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=1400&h=800&fit=crop&auto=format&q=80'
   ];
 
   useEffect(() => {
@@ -50,7 +47,7 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-400 via-red-500 to-yellow-500 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 via-red-500 to-yellow-500">
         <div className="text-center text-white">
           <div className="text-6xl animate-bounce mb-8">🍔</div>
           <div className="text-2xl">Loading delicious menu...</div>
@@ -61,7 +58,7 @@ function App() {
 
   return (
     <>
-      {/* Header - Admin login removed */}
+      {/* Header */}
       <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-xl border-b border-orange-100">
         <div className="max-w-6xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
@@ -80,45 +77,42 @@ function App() {
         </div>
       </header>
 
-      {/* Hero Slideshow */}
-      <section className="pt-28 pb-20 relative overflow-hidden">
+      {/* FIXED Hero - Full viewport height */}
+      <section className="relative h-screen w-full overflow-hidden -mt-24 pt-28"> 
         <div className="absolute inset-0">
           <div 
-            className="w-full h-screen absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out"
-            style={{
+            className="w-full h-full bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out opacity-0 animate-fade-in"
+            style={{ 
               backgroundImage: `url(${heroImages[currentSlide]})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
             }}
           />
-          {/* Overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/30 via-black/40 to-red-600/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/70 to-orange-500/50" />
         </div>
 
-        {/* Hero Content */}
-        <div className="max-w-6xl mx-auto px-6 h-screen flex items-center justify-center text-center text-white relative z-10">
-          <div className="max-w-4xl mx-auto animate-fade-in">
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight drop-shadow-2xl">
+        <div className="absolute inset-0 flex items-center justify-center text-white z-10">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight drop-shadow-2xl animate-slide-up">
               Welcome to<br className="md:block" />
-              <span className="bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-2xl">
+              <span className="bg-gradient-to-r from-orange-400/90 to-yellow-400/90 bg-clip-text text-transparent drop-shadow-2xl">
                 Flavor Town
               </span>
             </h2>
-            <p className="text-xl md:text-2xl lg:text-3xl text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
-              Fresh ingredients, bold flavors, made with love. 
-              <br className="md:hidden" /> Order now or visit us today!
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
+              Fresh ingredients, bold flavors, made with love. Order now or visit us today!
             </p>
           </div>
         </div>
 
-        {/* Slide Indicators */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
-          {heroImages.map((_, index) => (
+        {/* Slide dots */}
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+          {heroImages.map((_, idx) => (
             <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
+              key={idx}
+              onClick={() => setCurrentSlide(idx)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentSlide ? 'bg-white scale-125 shadow-lg' : 'bg-white/50 hover:bg-white'
+                idx === currentSlide 
+                  ? 'bg-white w-12 scale-125 shadow-lg' : 
+                  'bg-white/60 hover:bg-white hover:scale-110'
               }`}
             />
           ))}
@@ -152,16 +146,10 @@ function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {menu.slice(0, 8).map((item) => (
-              <article 
-                key={item.id}
-                className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-white/50 hover:border-orange-200 hover:-translate-y-3"
-              >
-                {/* Image/Emoji */}
+              <article key={item.id} className="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-white/50 hover:border-orange-200 hover:-translate-y-3">
                 <div className="h-56 bg-gradient-to-br from-orange-400 via-red-500 to-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
                   <span className="text-6xl drop-shadow-lg">🍔</span>
                 </div>
-
-                {/* Content */}
                 <div className="p-8">
                   <h4 className="text-2xl font-black text-gray-900 mb-4 group-hover:text-orange-600 transition-colors">
                     {item.name}
@@ -169,7 +157,6 @@ function App() {
                   <p className="text-gray-600 mb-6 leading-relaxed min-h-[4rem]">
                     {item.description || 'Freshly prepared with premium ingredients'}
                   </p>
-                  
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                     <span className="text-3xl font-black bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent">
                       R{item.price}
@@ -192,8 +179,6 @@ function App() {
           )}
         </div>
       </section>
-
-      {/* Rest of your sections (CTA, Footer) can go here */}
     </>
   );
 }
