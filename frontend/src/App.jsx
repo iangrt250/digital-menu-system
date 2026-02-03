@@ -132,7 +132,7 @@ function App() {
       </section>
 
       {/* CATEGORIES WITH FIXED SPACING (Small gaps, no whitespace, no borders) */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-red">
         <div className="max-w-6xl mx-auto px-6">
           <h3 className="text-4xl font-black text-center text-gray-900 mb-16">🍽️ Categories</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
