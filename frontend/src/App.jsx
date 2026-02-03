@@ -5,6 +5,7 @@ function App() {
   const [menu, setMenu] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const API_URL = import.meta.env.VITE_API_URL || 'https://restaurant-api-nssp.onrender.com';
@@ -31,6 +32,22 @@ function App() {
     ]);
   }, []);
 
+  // Hero slideshow
+  const heroImages = [
+    'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=1400&h=800&fit=crop&crop=center&auto=format&q=80',
+    'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1400&h=800&fit=crop&crop=center&auto=format&q=80',
+    'https://images.unsplash.com/photo-1579586140626-3ff1e6639440?w=1400&h=800&fit=crop&crop=center&auto=format&q=80',
+    'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=1400&h=800&fit=crop&crop=center&auto=format&q=80',
+    'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=1400&h=800&fit=crop&crop=center&auto=format&q=80'
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-400 via-red-500 to-yellow-500 flex items-center justify-center">
@@ -44,7 +61,7 @@ function App() {
 
   return (
     <>
-      {/* Header */}
+      {/* Header - Admin login removed */}
       <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-xl border-b border-orange-100">
         <div className="max-w-6xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
@@ -59,30 +76,52 @@ function App() {
                 <p className="text-lg text-gray-600 font-semibold">Restaurant & Grill</p>
               </div>
             </div>
-            <Link 
-              to="/admin/login"
-              className="group bg-gradient-to-r from-gray-900 to-gray-800 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center space-x-2"
-            >
-              <span>👨‍💼</span>
-              <span>Admin Portal</span>
-            </Link>
           </div>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="pt-28 pb-20 bg-gradient-to-b from-orange-50 to-yellow-50">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-5xl md:text-7xl font-black text-gray-900 mb-6 leading-tight">
-            Welcome to<br className="md:block" />
-            <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-              Flavor Town
-            </span>
-          </h2>
-          <p className="text-xl md:text-2xl text-gray-700 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Fresh ingredients, bold flavors, made with love. 
-            <br className="md:hidden" /> Order now or visit us today!
-          </p>
+      {/* Hero Slideshow */}
+      <section className="pt-28 pb-20 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div 
+            className="w-full h-screen absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out"
+            style={{
+              backgroundImage: `url(${heroImages[currentSlide]})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          />
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/30 via-black/40 to-red-600/30" />
+        </div>
+
+        {/* Hero Content */}
+        <div className="max-w-6xl mx-auto px-6 h-screen flex items-center justify-center text-center text-white relative z-10">
+          <div className="max-w-4xl mx-auto animate-fade-in">
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight drop-shadow-2xl">
+              Welcome to<br className="md:block" />
+              <span className="bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-2xl">
+                Flavor Town
+              </span>
+            </h2>
+            <p className="text-xl md:text-2xl lg:text-3xl text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-lg">
+              Fresh ingredients, bold flavors, made with love. 
+              <br className="md:hidden" /> Order now or visit us today!
+            </p>
+          </div>
+        </div>
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+          {heroImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide ? 'bg-white scale-125 shadow-lg' : 'bg-white/50 hover:bg-white'
+              }`}
+            />
+          ))}
         </div>
       </section>
 
@@ -148,20 +187,13 @@ function App() {
             <div className="col-span-full text-center py-32">
               <div className="text-8xl mb-8 opacity-20">🍽️</div>
               <h3 className="text-4xl font-black text-gray-500 mb-4">Menu Coming Soon!</h3>
-              <p className="text-xl text-gray-400 mb-8">Admin needs to add delicious items</p>
-              <Link 
-                to="/admin/login"
-                className="inline-block bg-gradient-to-r from-orange-500 to-red-600 text-white px-12 py-4 rounded-2xl text-2xl font-bold shadow-2xl hover:shadow-3xl transition-all"
-              >
-                👨‍💼 Add Menu Items
-              </Link>
+              <p className="text-xl text-gray-400 mb-8">Our menu will be available shortly</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* Rest of your sections (CTA, Footer) - same as before */}
-      {/* ... */}
+      {/* Rest of your sections (CTA, Footer) can go here */}
     </>
   );
 }
