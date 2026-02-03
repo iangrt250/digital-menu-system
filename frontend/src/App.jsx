@@ -51,7 +51,7 @@ function App() {
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/drink.jpg'
   ];
 
-  // SUPABASE STORAGE IMAGES - CATEGORIES (FIXED: No whitespace, small gaps, no borders)
+  // SUPABASE STORAGE IMAGES - CATEGORIES
   const categories = [
     {id: 1, name: 'All', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burgers-cat.jpg', color: '#FF6B35'},
     {id: 2, name: 'Burgers', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burgers-cat.jpg', color: '#FF6B35'},
@@ -131,44 +131,73 @@ function App() {
         </div>
       </section>
 
-      {/* CATEGORIES WITH FIXED SPACING (Small gaps, no whitespace, no borders) */}
+      {/* CATEGORIES - MODERN GOOGLE-STYLE LAYOUT */}
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <h3 className="text-4xl font-black text-center text-gray-900 mb-16">🍽️ Categories</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
             {categories.map(cat => {
               const isActive = selectedCategory === 'all' 
                 ? cat.name === 'All' 
                 : selectedCategory.toLowerCase() === cat.name.toLowerCase();
               
               return (
-                <div 
-                  key={cat.id} 
-                  className={`group text-center p-6 rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 ${
-                    isActive
-                      ? 'ring-4 ring-orange-400 bg-gradient-to-br from-orange-50 to-red-50 shadow-xl scale-105'
-                      : 'bg-gradient-to-b from-gray-50 to-white shadow-md hover:shadow-xl'
-                  }`}
+                <button
+                  key={cat.id}
+                  className={`
+                    group relative text-left p-4 rounded-[4px] text-[14px] leading-[22px] font-extrabold
+                    transition-all duration-200 hover:-translate-y-1 cursor-pointer
+                    ${isActive
+                      ? 'text-orange-600 bg-orange-50 shadow-sm ring-2 ring-orange-200 scale-[1.02]'
+                      : 'text-gray-900 hover:bg-gray-50 hover:shadow-sm hover:text-gray-900'
+                    }
+                    bg-none border-none h-auto box-border
+                    [-webkit-text-size-adjust:100%] [-webkit-tap-highlight-color:transparent]
+                    font-["National_2_Extrabold","National_2_Medium",-apple-system,BlinkMacSystemFont,"Segoe_UI",Roboto,"Helvetica_Neue",Arial,sans-serif]
+                  `}
+                  style={{
+                    color: '#202124',
+                    '--brandBlack': '#202124',
+                    '--darkGray': '#494949',
+                    '--mediumGrey': '#777474',
+                    '--fontFamilyRegular': '"National 2 Regular"',
+                    '--fontFamilyMedium': '"National 2 Medium"',
+                    '--fontFamilyCondensed': '"National 2 Condensed"',
+                    '--fontFamilyExtrabold': '"National 2 Extrabold"',
+                    fontFamily: 'var(--fontFamilyExtrabold), var(--fontFamilyMedium), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                    fontStyle: 'normal',
+                    fontWeight: '700',
+                    textDecoration: 'none',
+                    borderRadius: '4px',
+                    boxSizing: 'border-box'
+                  }}
                   onClick={() => handleCategoryClick(cat.name)}
                 >
-                  <div className="w-full h-32 mb-4 rounded-xl overflow-hidden bg-gray-100 group-hover:scale-105 transition-transform duration-300">
+                  {/* Category Image */}
+                  <div className="w-full h-28 mb-3 rounded-[2px] overflow-hidden bg-gray-100 group-hover:scale-[1.02] transition-transform duration-200">
                     <img 
                       src={cat.image}
                       alt={cat.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover block"
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burger.jpg';
                       }}
                     />
                   </div>
-                  <h4 className="text-xl font-bold text-gray-900 mb-2">{cat.name}</h4>
+                  
+                  {/* Category Name */}
+                  <h4 className="text-base font-extrabold text-inherit mb-1 leading-tight">
+                    {cat.name}
+                  </h4>
+                  
+                  {/* Active Indicator */}
                   {isActive && (
-                    <div className="text-orange-500 text-sm font-bold">
+                    <div className="absolute -top-3 -right-3 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold leading-none">
                       {filteredMenu.length} items
                     </div>
                   )}
-                </div>
+                </button>
               );
             })}
           </div>
