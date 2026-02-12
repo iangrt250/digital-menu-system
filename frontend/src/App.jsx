@@ -14,6 +14,10 @@ function App() {
     'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/drink.jpg'
   ];
 
+  // SUPABASE STORAGE IMAGES - APP BANNERS
+  const appStoreBanner = 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/app-store-ios.jpg';
+  const googlePlayBanner = 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/google-play-android.jpg';
+
   // SUPABASE STORAGE IMAGES - CATEGORIES WITH ROUTE PATHS
   const categories = [
     {id: 1, name: 'All', image: 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burgers-cat.jpg', color: '#FF6B35', path: '/menu/all'},
@@ -100,7 +104,7 @@ function App() {
         </div>
       </section>
 
-      {/* CATEGORIES - KFC STYLE LAYOUT - NOW WITH LINKS */}
+      {/* CATEGORIES - KFC STYLE LAYOUT */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <h3 className="text-4xl font-black text-center text-gray-900 mb-12">🍽️ Explore Categories</h3>
@@ -115,13 +119,12 @@ function App() {
                 <Link
                   key={cat.id}
                   to={cat.path}
-                  className={`
+                  className="
                     relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl
                     transition-all duration-300 cursor-pointer border-2 group h-48
                     border-gray-100 hover:border-orange-300 hover:-translate-y-2
-                  `}
+                  "
                 >
-                  {/* Category Image */}
                   <div className="w-full h-3/4 overflow-hidden">
                     <img 
                       src={cat.image}
@@ -133,8 +136,6 @@ function App() {
                       }}
                     />
                   </div>
-                  
-                  {/* Category Name */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6">
                     <h4 className="text-xl font-bold text-white text-center drop-shadow-lg">
                       {cat.name}
@@ -143,8 +144,6 @@ function App() {
                       View Menu
                     </p>
                   </div>
-                  
-                  {/* Arrow Indicator */}
                   <div className="absolute top-4 right-4 w-12 h-12 bg-orange-500/90 backdrop-blur-sm rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110">
                     →
                   </div>
@@ -158,11 +157,11 @@ function App() {
                 <Link
                   key={cat.id}
                   to={cat.path}
-                  className={`
+                  className="
                     relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl
                     transition-all duration-300 cursor-pointer border-2 group h-40
                     border-gray-100 hover:border-orange-300 hover:-translate-y-1
-                  `}
+                  "
                 >
                   <div className="w-full h-2/3 overflow-hidden">
                     <img 
@@ -171,7 +170,6 @@ function App() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400"
                     />
                   </div>
-                  
                   <div className="p-4 bg-white/90 backdrop-blur-sm">
                     <h4 className="text-lg font-bold text-gray-900 text-center group-hover:text-orange-600 transition-colors">
                       {cat.name}
@@ -188,11 +186,11 @@ function App() {
                 <Link
                   key={cat.id}
                   to={cat.path}
-                  className={`
+                  className="
                     relative bg-gradient-to-br from-white to-orange-50 rounded-lg overflow-hidden shadow-lg hover:shadow-xl
                     transition-all duration-300 cursor-pointer border-2 group h-40 flex items-center p-4
                     border-gray-100 hover:border-orange-400 hover:-translate-y-2 hover:scale-[1.02]
-                  `}
+                  "
                 >
                   <div className="w-20 h-20 rounded-xl overflow-hidden mr-4 flex-shrink-0 shadow-lg">
                     <img 
@@ -201,7 +199,6 @@ function App() {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
-                  
                   <div className="flex-1 min-w-0">
                     <h4 className="text-lg font-bold text-gray-900 group-hover:text-orange-600 transition-colors">
                       {cat.name}
@@ -210,7 +207,6 @@ function App() {
                       Discover our finest {cat.name.toLowerCase()}
                     </p>
                   </div>
-                  
                   <div className="ml-4 text-2xl text-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-300">
                     →
                   </div>
@@ -221,7 +217,7 @@ function App() {
         </div>
       </section>
 
-      {/* DOWNLOAD APP SECTION - SUPABASE IMAGES */}
+      {/* DOWNLOAD APP SECTION - IMAGES AS BANNERS */}
       <section className="py-24 bg-gradient-to-b from-orange-50 to-yellow-50">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="mb-20">
@@ -229,14 +225,63 @@ function App() {
             <p className="text-xl text-gray-700 max-w-2xl mx-auto">Order your favorite meals on the go!</p>
           </div>
 
-          
+          {/* MAIN APP STORE BUTTONS WITH IMAGES */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto mb-12">
+            {/* iOS App Store - IMAGE SHOWS HERE */}
+            <a 
+              href="https://www.apple.com/app-store/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group relative bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-4 hover:-translate-y-2 overflow-hidden"
+            >
+              <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-2xl absolute inset-0 opacity-90 group-hover:opacity-100 transition-opacity z-10 group-hover:scale-110">
+                <img 
+                  src={appStoreBanner}
+                  alt="Download on App Store"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burger.jpg';
+                  }}
+                />
+              </div>
+              <div className="relative z-20 pl-20">
+                <p className="text-sm font-semibold opacity-90 mb-1">Download on the</p>
+                <p className="text-2xl font-black">App Store</p>
+              </div>
+            </a>
+
+            {/* Android Google Play - IMAGE SHOWS HERE */}
+            <a 
+              href="https://play.google.com/store/apps" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group relative bg-gradient-to-br from-emerald-600 via-emerald-500 to-green-600 hover:from-emerald-700 hover:to-green-700 text-gray-900 p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-4 hover:-translate-y-2 overflow-hidden border-4 border-white/20"
+            >
+              <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-2xl absolute inset-0 opacity-90 group-hover:opacity-100 transition-opacity z-10 group-hover:scale-110 border-2 border-white/30">
+                <img 
+                  src={googlePlayBanner}
+                  alt="Get it on Google Play"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/burger.jpg';
+                  }}
+                />
+              </div>
+              <div className="relative z-20 pl-20">
+                <p className="text-sm font-semibold opacity-90 mb-1">GET IT ON</p>
+                <p className="text-2xl font-black">Google Play</p>
+              </div>
+            </a>
+          </div>
 
           {/* Direct Download Links */}
           <div className="mt-12 pt-8 border-t border-orange-200">
-            <p className="text-lg mb-6 text-gray-700 font-semibold"></p>
+            <p className="text-lg mb-6 text-gray-700 font-semibold">📥 Download app banners directly:</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
               <a 
-                href="https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/app-store-ios.jpg"
+                href={appStoreBanner}
                 download="Tapiwa-iOS-Banner.jpg"
                 className="flex-1 px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all flex items-center justify-center space-x-2 text-sm"
               >
@@ -246,7 +291,7 @@ function App() {
                 <span>iOS Banner</span>
               </a>
               <a 
-                href="https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/google-play-android.jpg"
+                href={googlePlayBanner}
                 download="Tapiwa-Android-Banner.jpg"
                 className="flex-1 px-6 py-4 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all flex items-center justify-center space-x-2 text-sm"
               >
@@ -351,16 +396,6 @@ function App() {
       >
         🛒
       </Link>
-
-      <style jsx>{`
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        .animate-shimmer {
-          animation: shimmer 2s infinite;
-        }
-      `}</style>
     </>
   );
 }
