@@ -229,67 +229,7 @@ function App() {
             <p className="text-xl text-gray-700 max-w-2xl mx-auto">Order your favorite meals on the go!</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            {/* iOS App Store - SUPABASE IMAGE */}
-            <a 
-              href="https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/app-store-ios.jpg?download" 
-              download="Tapiwa-iOS-App.jpg"
-              className="group bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-4 hover:-translate-y-2 border border-white/20 hover:border-white/40 overflow-hidden relative"
-            >
-              <div className="relative z-10 w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
-                <img 
-                  src="https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/app-icon-ios.png"
-                  alt="iOS App" 
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.06 2.47-1.3.03-1.64-.82-3.11-.83-1.45-.01-1.98.78-2.86.78-.91 0-2.02-.47-2.93-.91-.33-.16-.66-.58-.88-.94-.13-.2-.25-.53-.25-.82 0-.84.49-1.85 1.32-1.85.23 0 .46.06.66.26.63.59 1.43 1 2.23 1.23.3.08.71.04 1.02-.22.36-.31.55-.83.55-1.21 0-.39-.14-.9-.6-1.43-1.29-1.52-2.46-3.24-2.47-5.25.01-2.92 2.33-5.15 5.25-5.16 2.94.01 5.23 2.27 5.25 5.17 0 .96-.36 2.07-1.04 2.95-.29.77-.72 1.5-1.22 2.19-.09.12-.18.24-.26.36-.18.26-.42.6-.42.98 0 .66.47 1.38 1.24 1.38.47 0 .89-.27 1.14-.66.17-.27.29-.72.29-1.15 0-.29-.07-.57-.2-.82-.27-.52-.73-1-.73-1.6 0-1.79 1.44-3.19 3.23-3.19s3.23.62 3.23 3.2c0 1.77-1.14 3.18-2.7 3.62 1.12.17 2.05.73 2.66 1.54.66.88 1.02 2.02 1.02 3.25 0 2.74-2.2 5-5 5-.83 0-1.63-.23-2.37-.65-.26-.15-.5-.38-.71-.64-.21-.25-.39-.57-.39-.96 0-.46.31-.88.8-1.02z"/>
-                  </svg>
-                </div>
-              </div>
-              <div className="relative z-10">
-                <p className="text-sm font-semibold opacity-90 mb-1">Download on the</p>
-                <p className="text-2xl font-black">App Store</p>
-              </div>
-              {/* Download shimmer */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl blur animate-shimmer"></div>
-            </a>
-
-            {/* Android Google Play - SUPABASE IMAGE */}
-            <a 
-              href="https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/google-play-android.jpg?download" 
-              download="Tapiwa-Android-App.jpg"
-              className="group bg-gradient-to-br from-green-600 via-emerald-500 to-green-700 hover:from-green-700 hover:to-emerald-600 text-gray-900 p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-4 hover:-translate-y-2 border-4 border-white/20 hover:border-white/40 overflow-hidden relative"
-            >
-              <div className="relative z-10 w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl border-2 border-white/30">
-                <img 
-                  src="https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/app-icon-android.png"
-                  alt="Android App" 
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M4.12 3.45c-.78.78-.78 2.05 0 2.83L8.85 12l-4.73 5.72c-.78.78-.78 2.05 0 2.83.39.39.9.59 1.41.59.52 0 1.03-.2 1.42-.59l7.13-7.12c.39-.39.59-.9.59-1.42 0-.52-.2-1.03-.59-1.42L7.95 3.86a2.07 2.07 0 0 0-1.83-.59c-.51 0-1.03.2-1.42.59zM21 6.5l-3.5 3.5V19h-2v-8.5L13 6.5H9L12.5 10 16 6.5h2z"/>
-                  </svg>
-                </div>
-              </div>
-              <div className="relative z-10">
-                <p className="text-sm font-semibold opacity-90 mb-1">GET IT ON</p>
-                <p className="text-2xl font-black">Google Play</p>
-              </div>
-              {/* Download shimmer */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl blur animate-shimmer"></div>
-            </a>
-          </div>
+          
 
           {/* Direct Download Links */}
           <div className="mt-12 pt-8 border-t border-orange-200">
