@@ -233,7 +233,7 @@ function App() {
 
           {/* Direct Download Links */}
           <div className="mt-12 pt-8 border-t border-orange-200">
-            <p className="text-lg mb-6 text-gray-700 font-semibold">📥 Or download app banners directly:</p>
+            <p className="text-lg mb-6 text-gray-700 font-semibold"></p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
               <a 
                 href="https://vccnhuhodkdxvesrtlxc.supabase.co/storage/v1/object/public/menu-images/app-store-ios.jpg"
