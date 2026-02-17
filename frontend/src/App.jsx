@@ -275,33 +275,6 @@ function App() {
               </div>
             </a>
           </div>
-
-          {/* Direct Download Links */}
-          <div className="mt-12 pt-8 border-t border-orange-200">
-            <p className="text-lg mb-6 text-gray-700 font-semibold">📥 Download app banners directly:</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-              <a 
-                href={appStoreBanner}
-                download="Tapiwa-iOS-Banner.jpg"
-                className="flex-1 px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all flex items-center justify-center space-x-2 text-sm"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10l-5.5 5.5m0 0L12 21l5.5-5.5m-5.5 5.5V6" />
-                </svg>
-                <span>iOS Banner</span>
-              </a>
-              <a 
-                href={googlePlayBanner}
-                download="Tapiwa-Android-Banner.jpg"
-                className="flex-1 px-6 py-4 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all flex items-center justify-center space-x-2 text-sm"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10l-5.5 5.5m0 0L12 21l5.5-5.5m-5.5 5.5V6" />
-                </svg>
-                <span>Android Banner</span>
-              </a>
-            </div>
-          </div>
         </div>
       </section>
 
